@@ -1,66 +1,30 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!doctype html>
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Gerar Login - MarianoCell</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>CMTV - A lista mais atualizada e completa!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Sistema de Geração de Login</h1>
+  <div class="overlay">
+    <div class="card">
+      <img src="cmtv-logo.png" alt="CMTV" class="logo" />
+      <h1>CMTV — A lista mais atualizada e completa!</h1>
 
-  <form id="userForm">
-    <label>Nome:</label>
-    <input type="text" id="firstName" required><br>
+      <form id="userForm" class="form">
+        <input id="firstName" name="firstName" placeholder="Nome" required />
+        <input id="lastName" name="lastName" placeholder="Sobrenome" required />
+        <input id="whatsapp" name="whatsapp" placeholder="WhatsApp do cliente (ex: 5598999999999)" required />
+        <button type="submit" class="btn-primary">Gerar usuário</button>
+      </form>
 
-    <label>Sobrenome:</label>
-    <input type="text" id="lastName" required><br>
+      <div id="result" class="result">Preencha o formulário para gerar o acesso.</div>
+      <a id="waButton" href="#" target="_blank" class="whatsapp-btn" style="display:none">📲 Enviar pelo WhatsApp</a>
+    </div>
+  </div>
 
-    <label>WhatsApp do Cliente:</label>
-    <input type="text" id="whatsapp" placeholder="Ex: 5598999999999" required><br>
-
-    <button type="submit">Gerar Usuário</button>
-  </form>
-
-  <h2>Resultado</h2>
-  <pre id="result">Preencha o formulário acima.</pre>
-  <a id="waLink" href="#" target="_blank" style="display:none;">Enviar mensagem pelo WhatsApp</a>
-
-  <script>
-    const form = document.getElementById('userForm');
-    const result = document.getElementById('result');
-    const waLink = document.getElementById('waLink');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const data = {
-        firstName: document.getElementById('firstName').value.trim(),
-        lastName: document.getElementById('lastName').value.trim(),
-        whatsapp: document.getElementById('whatsapp').value.trim()
-      };
-
-      try {
-        const res = await fetch('/create', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-
-        const json = await res.json();
-
-        if (json.error) {
-          result.textContent = `Erro: ${json.error}`;
-          waLink.style.display = 'none';
-        } else {
-          result.textContent = `Usuário gerado com sucesso!\n\nLogin: ${json.username}\nSenha: ${json.password}\n\nClique no botão abaixo para enviar a mensagem automaticamente pelo WhatsApp.`;
-          waLink.href = json.whatsappLink;
-          waLink.style.display = 'inline-block';
-        }
-      } catch (err) {
-        result.textContent = 'Erro: ' + err.message;
-        waLink.style.display = 'none';
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
