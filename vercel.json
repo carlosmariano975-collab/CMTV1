@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/create", "destination": "/api/index.js" },
+    { "source": "/(.*)", "destination": "/público/$1" }
+  ]
+}
